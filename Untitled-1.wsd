@@ -1,0 +1,61 @@
+@startuml "Reservierungssystem"
+
+class Ticket{
+- gültig: Bool
+- saalnummer: string
+- sitzplatz: string
++ validieren()
+}
+
+class Sitzplatz{
+- reihe
+- nummer
+- kategorie
+}
+
+class Saal{
+- saalnummer
+- barrierefrei: Bool
++ getSitzpleaetze()
++ anlegen()
++ löschen()
+}
+
+class Film{
+- name
+- erscheinungsdatum
+- fskKennzeichnung
+
++ getInfo()
++ hinzufügen()
++ löschen()
+}
+
+class Vorstellung{
+- datum: String
+- uhrzeit: String
+- freieSitze: Sitzplatz[*]
+{static} + FilmAngebot():Film[]
++ getInfo()
++ bucheSitzplatz(Sitzplatz)
++ getFreieSitze(): Sitzplatz[*]
+}
+
+class Buchung{
+    - buchungsID
+}
+
+class Account{
+
+}
+
+Saal "1"*--"*" Sitzplatz: enthält Sitze
+
+Vorstellung "0..*" -- "1" Saal: hat
+Vorstellung "0..*" -- "1" Film: zeigt
+
+Buchung "0..*"--"1" Account
+Buchung "0..*"-"1" Vorstellung
+Buchung "1" *- "1..*" Ticket
+
+@enduml
