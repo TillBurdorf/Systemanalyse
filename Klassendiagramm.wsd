@@ -6,8 +6,10 @@ class Ticket{
     - saalID: String
     - vorstellungsID: String
     - sitzplatz: String
+    - qrCode: String
     - tarif: enum Tarif{Erwachsene, Kind, Ermäßigt}
 
+    + getInfo()
     + statusAendern()
     + validieren()
     + ticketStornieren()
@@ -27,8 +29,8 @@ class Saal{
     {static}+ saalErstellen()
     {static}+ saalLoeschen()
     + saalBearbeiten()
-    + getSitzpleaetze()
-    + löschen()
+    + getSaalplan()
+    + saalLoeschen()
 }
 
 class Film{
@@ -47,11 +49,12 @@ class Vorstellung{
     - vorstellungsID: String
     - datum: String
     - uhrzeit: String
-    - freieSitze: Sitzplatz[*]
+    - sitzbelegung: map<Sitzplatz, Boolean>
 
     {static}+ vorstellungErstellen()
     {static}+ aktuelleVorstellungen():Vorstellung[]
     + getInfo()
+    + vorstellungBearbeiten()
     + sitzplatzBuchen(Sitzplatz)
     + sitzplatzFreigeben(Sitzplatz)
     + getSitzplaetze(): map<Sitzplatz, Boolean> 
@@ -74,10 +77,16 @@ class Buchung{
 class Account{
     - name: String
     - email: String
+    - password_hash: String
+    - angemeldet: Boolean
     - rolle: enum Rolle{Admin, Mitarbeiter, User}
 
     {static}+ accountErstellen()
     + getInfo()
+    + passwortZurücksetzen()
+    + registrieren()
+    + login()
+    + logout()
 }
 
 Saal "1"*--"*" Sitzplatz: enthält Sitze
