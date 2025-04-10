@@ -17,7 +17,6 @@ class Sitzplatz{
     - reihe: String
     - nummer: int
     - kategorie: enum Kategorie{Standard, Premium, D-Box}
-
     + getInfo()
 }
 
@@ -66,8 +65,10 @@ class Buchung{
 
     {static}+ buchungErstellen()
     + statusAendern()
+    + sitzplätzeWählen()
     + buchungStornieren()
     + buchungAbschließen()
+
 }
 
 class Account{
