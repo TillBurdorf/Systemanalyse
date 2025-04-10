@@ -1,61 +1,73 @@
 @startuml "Reservierungssystem"
 
 class Ticket{
-- gültig: Bool
-- saalnummer: string
-- sitzplatz: string
-- tarif: enum Tarif{Erwachsene, Kind, Ermäßigt}
-+ validieren()
+    - ticketID: String
+    - gueltig: Bool
+    - saalID: String
+    - vorstellungsID: String
+    - sitzplatz: String
+    - tarif: enum Tarif{Erwachsene, Kind, Ermäßigt}
+
+    + statusAendern()
+    + validieren()
+    + ticketStornieren()
 }
 
 class Sitzplatz{
-- reihe
-- nummer
-- kategorie
+    - reihe: String
+    - nummer: int
+    - kategorie: enum Kategorie{Standard, Premium, D-Box}
 
-+ getInfo()
+    + getInfo()
 }
 
 class Saal{
-- saalnummer
-- barrierefrei: Bool
+    - saalID: String
+    - barrierefrei: Bool
 
-{static}+ saalErstellen()
-+ getSitzpleaetze()
-+ löschen()
+    {static}+ saalErstellen()
+    {static}+ saalLoeschen()
+    + saalBearbeiten()
+    + getSitzpleaetze()
+    + löschen()
 }
 
 class Film{
-- name: String
-- fskKennzeichnung: String
-- omdbId: String
+    - name: String
+    - fskKennzeichnung: String
+    - omdbId: String
 
-{static} + FilmAngebot():Film[]
-{static}+ filmErstellen()
-+ getInfo()
-+ löschen()
-+ getOmdbId()
+    {static}+ filmAngebot():Film[]
+    {static}+ filmErstellen()
+    {static}+ filmLoeschen()
+    + getInfo()
+    + getOmdbId()
 }
 
 class Vorstellung{
+    - vorstellungsID: String
     - datum: String
     - uhrzeit: String
     - freieSitze: Sitzplatz[*]
 
     {static}+ vorstellungErstellen()
+    {static}+ aktuelleVorstellungen():Vorstellung[]
     + getInfo()
-    + bucheSitzplatz(Sitzplatz)
-    + getFreieSitze(): Sitzplatz[*]
+    + sitzplatzBuchen(Sitzplatz)
+    + sitzplatzFreigeben(Sitzplatz)
+    + getSitzplaetze(): map<Sitzplatz, Boolean> 
     + preisFestlegen()
 }
 
 class Buchung{
-    - buchungsID
+    - buchungsID: String
     - status: enum Status{offen, storniert, bezahlt}
     - zahlungsmethode: enum Zahlungsmethode{Kreditkarte, Paypal, Lastschrift}
 
+    {static}+ buchungErstellen()
     + statusAendern()
-    + bezahlen()
+    + buchungStornieren()
+    + buchungAbschließen()
 }
 
 class Account{
@@ -64,6 +76,7 @@ class Account{
     - rolle: enum Rolle{Admin, Mitarbeiter, User}
 
     {static}+ accountErstellen()
+    + getInfo()
 }
 
 Saal "1"*--"*" Sitzplatz: enthält Sitze
