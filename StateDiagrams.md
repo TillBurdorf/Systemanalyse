@@ -1,6 +1,5 @@
----
-title: Buchung
----
+## Buchung
+````mermaid
 stateDiagram-v2
     [*] --> open: buchungErstellen()
     open --> open: sitzplätzeWählen()
@@ -10,12 +9,15 @@ stateDiagram-v2
     bezahlt --> [*]: Vorstellung vorbei
     storniert --> [*]
 
----
-title: Ticket
----
+
+`````
+
+## Ticket
+````mermaid
 stateDiagram-v2
     [*] --> ungültig: sitzplätzeWählen()
     ungültig --> gültig: buchungAbschließen()
     gültig --> abgeschlossen: validieren(), ticketStornieren(), Vorstellung vorbei
     ungültig --> abgeschlossen: ticketStornieren()
     abgeschlossen --> [*]
+````
