@@ -2,7 +2,7 @@
 
 class Ticket{
     - ticketID: String
-    - gueltig: Bool
+    - status: enum{gültig, ungültig, abgeschlossen}
     - saalID: String
     - vorstellungsID: String
     - sitzplatz: String
